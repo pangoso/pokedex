@@ -1,3 +1,8 @@
 .App {
   text-align: center;
 }
+
+.headCell {
+  border-color: '#DBDBDB';
+  color: 'blue'
+}
