@@ -1,0 +1,14 @@
+localhost:8080/pokemon
+
+{"id":2,
+"pokedexId":2,
+"name":"Ivysaur", 
+"type1":"Grass",
+"type2":"Poison",
+"hp":405,
+"attack":60,
+"defense":63,
+"sp_attack":63,
+"sp_defense":80,
+"speed":60,
+"generation":1}

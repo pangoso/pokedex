@@ -19,4 +19,12 @@ public class PokemonService {
     public Optional<Pokemon> findById(Integer id){
         return pokemonRepository.findById(id);
     }
+
+    public List<Pokemon> findByPokedexId(Integer id){
+        return pokemonRepository.findByPokedexId(id);
+    }
+
+    public Pokemon save(Pokemon pokemon){
+        return pokemonRepository.save(pokemon);
+    }
 }
