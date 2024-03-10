@@ -1,6 +1,8 @@
 package pp.put;
  
 
+import org.springframework.beans.factory.annotation.Value;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +16,8 @@ public class Pokemon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
  
-    private Integer pokedex_id;
+    @Value("pokedex_id")
+    private Integer pokedexId;
     private String name;
     private String type1;
     private String type2;
