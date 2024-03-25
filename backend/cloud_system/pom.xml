@@ -18,7 +18,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
-        <lombok.version>1.14.8</lombok.version>
+        <lombok.version>1.18.26</lombok.version>
         <log4jdbc.log4j2.version>1.16</log4jdbc.log4j2.version>
         <rest.assured.version>2.3.3</rest.assured.version>
     </properties>
@@ -81,7 +81,7 @@
                     <dependency>
                         <groupId>org.springframework</groupId>
                         <artifactId>springloaded</artifactId>
-                        <version>${spring-loaded.version}</version>
+                        <version>1.2.8.RELEASE</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -98,7 +98,7 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <workingDirectory>${project.basedir}/../../frontend</workingDirectory>
-                            <nodeVersion>18.18.0</nodeVersion>
+                            <nodeVersion>v18.18.0</nodeVersion>
                             <npmVersion>10.1.0</npmVersion>
                         </configuration>
                     </execution>
@@ -119,7 +119,7 @@
                         </goals>
                         <configuration>
                             <workingDirectory>${project.basedir}/../../frontend</workingDirectory>
-                            <arguments>build</arguments>
+                            <arguments>run build</arguments>
                         </configuration>
                         <phase>generate-resources</phase>
                     </execution>
@@ -138,13 +138,14 @@
                         </goals>
                         <configuration>
                             <executable>docker</executable>
-                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <workingDirectory>${project.basedir}/../../frontend</workingDirectory>
                             <arguments>
                                 <argument>build</argument>
                                 <argument>-f</argument>
-                                <argument>front.Dockerfile</argument>
+                                <argument>${project.basedir}/../../backend/cloud_system/frontend.Dockerfile</argument>
                                 <argument>-t</argument>
-                                <argument>backend:1.0</argument>
+                                <argument>frontend:1.0</argument>
+                                <argument>.</argument>
                             </arguments>
                         </configuration>
                     </execution><execution>
@@ -162,6 +163,7 @@
                                 <argument>backend.Dockerfile</argument>
                                 <argument>-t</argument>
                                 <argument>backend:1.0</argument>
+                                <argument>.</argument>
                             </arguments>
                         </configuration>
                     </execution>
