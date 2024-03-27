@@ -1,0 +1,36 @@
+services:
+  database:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    networks:
+      - external
+    container_name: database
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./database/table_insert.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_PASSWORD=pokemon
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+  backend:
+    image: "backend:1.0"
+    ports:
+      - "8080:8080"
+    networks:
+      - external
+    container_name: backend
+  frontend:
+    image: "frontend:1.0"
+    ports:
+      - "3000:80"
+    networks:
+      - external
+    container_name: frontend
+
+volumes:
+  database:
+    external: true
+networks:
+  external:
+    external: true
