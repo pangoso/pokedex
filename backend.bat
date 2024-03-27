@@ -1,0 +1,1 @@
+docker run --name backend --network external -p 8080:8080 -d backend:1.0

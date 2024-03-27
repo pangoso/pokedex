@@ -1,0 +1,1 @@
+docker run --name frontend --network external -p 3000:80 -d frontend:1.0
