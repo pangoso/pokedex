@@ -33,19 +33,19 @@ public class PokemonController {
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
-    public Pokemon create(@RequestBody Pokemon pokemon) {
-        if (pokemonService.findById(pokemon.getId()).isPresent()){
-			return new Pokemon();
-        }
-        else{
-            return pokemonService.save(pokemon);
-        }
+    public boolean create(@RequestBody Pokemon pokemon) {
+        var newID = pokemonService.findAll().size() + 1;
+        pokemon.setId(newID);
+        pokemonService.save(pokemon);
+        return true;
     }
 
     // update a pokemon
     @PutMapping
-    public Pokemon update(@RequestBody Pokemon pokemon) {
-        return pokemonService.save(pokemon);
+    public boolean update(@RequestBody Pokemon pokemon) {
+        Pokemon nPokemon = setValues(pokemon);
+        pokemonService.save(nPokemon);
+        return true;
     }
 
     @GetMapping("/stats={id}")
@@ -53,5 +53,32 @@ public class PokemonController {
         Optional<Pokemon> pokemon = pokemonService.findById(id);
         return pokemon.get().getAttack() + pokemon.get().getDefense() + pokemon.get().getSpeed() +
         pokemon.get().getSp_defense() + pokemon.get().getSp_attack();
+    }
+
+    private Pokemon setValues(Pokemon pokemon){
+        Optional<Pokemon> oldPokemon = pokemonService.findById(pokemon.getId());
+        Pokemon newPokemon = new Pokemon();
+        if (oldPokemon.isPresent()){
+            newPokemon = oldPokemon.get();
+        };
+        if (!pokemon.getAttack().equals(null)){
+            newPokemon.setAttack(pokemon.getAttack());
+        }
+        if (!pokemon.getDefense().equals(null)){
+            newPokemon.setDefense(pokemon.getDefense());
+        }
+        if (!pokemon.getHp().equals(null)){
+            newPokemon.setHp(pokemon.getHp());
+        }
+        if (!pokemon.getSp_attack().equals(null)){
+            newPokemon.setSp_attack(pokemon.getSp_attack());
+        }
+        if (!pokemon.getSp_defense().equals(null)){
+            newPokemon.setSp_defense(pokemon.getSp_defense());
+        }
+        if (!pokemon.getSpeed().equals(null)){
+            newPokemon.setSpeed(pokemon.getSpeed());
+        }
+        return newPokemon;
     }
 }
