@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/form",
-    element: <Form pokemon={{name:"poki", type:["poison", "fire"], hp:5, attack:10, defense: 20, specialAttack: 50, specialDefense: 10, speed: 2}}/>,
+    element: <Form/>,
   },
 ]);
 

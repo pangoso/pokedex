@@ -10,13 +10,18 @@ Frontend of the application should be visible at address http://localhost:3000
 
 # Endpoints details
 
+## GET all DONE
+
 ## GET /id={id}
 Return pokemon with given ID (primary key) - always return one
+
 ## GET /pokemon_id={id}
 Return pokemon(s) with given pokedex ID - if appears to be more than one, return list of them
+
 ## GET /stats={id}
 Return sum of all stats of pokemon of given ID (primary key)
-## POST
+
+## POST DONE
 Creates a new Pokemon with given parameters, added in body of request, for example:
 
 {"pokedexId":2,
@@ -32,7 +37,8 @@ Creates a new Pokemon with given parameters, added in body of request, for examp
 "generation":1}
 
 Throws error if some of not nullable values are not specified
-## PUT
+
+## PUT DONE
 Updates a Pokemon of given ID - if Pokemon of given ID does not exist, then creates it. Example body:
 
 {"id":2,
