@@ -1,1 +1,1 @@
-export const API_URL = 'http://localhost:3000/pokemon';
+export const API_URL = 'http://localhost:8080/pokemon';
