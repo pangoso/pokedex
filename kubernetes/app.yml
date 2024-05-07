@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+spec:
+  volumes:
+    - name: db-persistent-volume
+      persistentVolumeClaim:
+        claimName: db-persistent-volume-claim
+    - name: frontend-volume
+      emptyDir: {}
+  containers:
+    - image: frontend
+      name: frontend-container
+      ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+      volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx-persistent-volume
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+    - image: backend
+      name: backend-container
+      ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 8080
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+    - image: db
+      name: db-container
+      ports:
+          - containerPort: 1521
+            name: http
+            protocol: TCP
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: db-persistent-volume
+            livenessProbe:
+      httpGet:
+        path: /
+        port: 1521
+      initialDelaySeconds: 5
+      timeoutSeconds: 1
+      periodSeconds: 10
+      failureThreshold: 3

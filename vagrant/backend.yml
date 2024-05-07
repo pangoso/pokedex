@@ -1,0 +1,11 @@
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: java is installed
+      yum:
+        name: java-17.0.2-openjdk
+        state: present
+
+    - name: jar is started
+    shell: "java -jar backend\cloud_system\target\cloud_system-1.0-SNAPSHOT.jar"
