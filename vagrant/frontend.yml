@@ -1,0 +1,16 @@
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+    - name: Install packages
+      apt: update_cache=yes name={{ item }} state=present
+      with_items:
+        - python-pip
+        - nginx
+        - nodejs
+    - name: Copy nginx configuration
+      template: src=frontend/nginx.conf dest=/etc/nginx/conf.d/default.conf
+      notify: restart nginx
+    - name: restart nginx
+      service: name=nginx state=restarted enabled=yes

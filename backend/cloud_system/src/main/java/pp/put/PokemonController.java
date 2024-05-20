@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/pokemon")
 public class PokemonController {
 
@@ -47,7 +48,7 @@ public class PokemonController {
         pokemonService.save(nPokemon);
         return true;
     }
-
+    
     @GetMapping("/stats={id}")
     public Integer getStats(@PathVariable Integer id){
         Optional<Pokemon> pokemon = pokemonService.findById(id);
