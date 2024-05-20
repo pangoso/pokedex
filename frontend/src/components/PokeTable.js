@@ -57,7 +57,7 @@ export const PokeTable = () => {
   }, [])
 
   React.useEffect(() => {
-    setReloadPage(!reloadPage)
+    
   }, [serverPokedata])
 
   async function handleSearch() {
