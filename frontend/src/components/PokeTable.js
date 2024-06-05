@@ -50,25 +50,27 @@ export const PokeTable = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       const newPokemons = await getAll();
-      setServerPokedata(newPokemons)
+      setServerPokedata(newPokemons.data)
     }
   
     fetchData().catch(console.error);
   }, [])
 
   React.useEffect(() => {
-    setReloadPage(!reloadPage)
+    
   }, [serverPokedata])
 
   async function handleSearch() {
     const newPokemons = await getById(+search);
-    if (newPokemons) setServerPokedata(newPokemons)
+    const pokeArray = []
+    pokeArray.push(newPokemons.data)
+    if (newPokemons) setServerPokedata(pokeArray)
   }
 
   async function handleTotal(id, name) {
     const total = await getTotal(id);
     setClickedName(name)
-    if (total) setClickedTotal(total)
+    if (total.data) setClickedTotal(total.data)
     setOpen(true)
   }
 
@@ -229,13 +231,13 @@ export const PokeTable = () => {
                     </TableCell>
                     <TableCell align="left">
                       <TypeTag text={row.type1}/>
-                      {row.type2 !== "" ? <TypeTag text={row.type2}/> : null}
+                      {(row.type2 !== " " && row.type2 !== '') ? <TypeTag text={row.type2}/> : null}
                     </TableCell>
                     <TableCell align="left">{row.hp}</TableCell>
                     <TableCell align="left">{row.attack}</TableCell>
                     <TableCell align="left">{row.defense}</TableCell>
-                    <TableCell align="left">{row.specialAttack}</TableCell>
-                    <TableCell align="left">{row.specialDefense}</TableCell>
+                    <TableCell align="left">{row.sp_attack}</TableCell>
+                    <TableCell align="left">{row.sp_defense}</TableCell>
                     <TableCell align="left">{row.speed}</TableCell>
                     <TableCell align="left">
                       <SearchIcon
@@ -254,9 +256,10 @@ export const PokeTable = () => {
                           hp: row.hp,
                           attack: row.attack,
                           defense: row.defense,
-                          specialAttack: row.specialAttack,
-                          specialDefense: row.specialDefense,
-                          speed: row.speed
+                          specialAttack: row.sp_attack,
+                          specialDefense: row.sp_defense,
+                          speed: row.speed,
+                          pokedexId: row.pokedexId
                         }})
                     }
                     />

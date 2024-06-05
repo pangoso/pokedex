@@ -36,7 +36,13 @@ public class PokemonController {
     @PostMapping
     public boolean create(@RequestBody Pokemon pokemon) {
         var newID = pokemonService.findAll().size() + 1;
+
+        Optional<Pokemon> pokemon1 = pokemonService.findById(newID-1);
         pokemon.setId(newID);
+
+        if (pokemon1 != null){
+            pokemon.setPokedexId(pokemon1.get().getPokedexId()+1);
+        }
         pokemonService.save(pokemon);
         return true;
     }

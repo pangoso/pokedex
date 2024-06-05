@@ -13,7 +13,6 @@ import lombok.Setter;
 @Setter
 public class Pokemon {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
  
     @Value("pokedex_id")

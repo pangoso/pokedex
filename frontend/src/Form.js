@@ -17,8 +17,8 @@ export const Form = (props) =>  {
   const [specialAttack, setSpecialAttack] = useState(0)
   const [specialDefense, setSpecialDefense] = useState(0)
   const [speed, setSpeed] = useState(0)
-  const [type1, setType1] = useState('')
-  const [type2, setType2] = useState('')
+  const [type1, setType1] = useState(' ')
+  const [type2, setType2] = useState(' ')
 
   useEffect(() => {
     if (state !== null) {
@@ -37,15 +37,17 @@ export const Form = (props) =>  {
   async function handleAdd() {
     if (state === null) {
       const newPoki = {
+        id: 0,
+        pokedexId: 0,
         attack: attack,
         defense: defense,
         hp: hp,
         name: name,
-        specialAttack: specialAttack,
-        specialDefense: specialDefense,
+        sp_attack: specialAttack,
+        sp_defense: specialDefense,
         speed: speed,
         type1: type1,
-        type2: (type2.length > 0 && type1 !== type2) ? type2 : '',
+        type2: (type2.length > 0 && type1 !== type2) ? type2 : ' ',
         generation: 10,
       }
       await axios.post(`${API_URL}`, newPoki).then((success) => true).catch((err) => false).then(() => navigate('/'))
@@ -53,21 +55,23 @@ export const Form = (props) =>  {
     else {
       const newPoki = {
         id: +state.id,
-        pokedexId: +state.id,
+        pokedexId: +state.pokedexId,
         attack: attack,
         defense: defense,
         hp: hp,
         name: name,
-        specialAttack: specialAttack,
-        specialDefense: specialDefense,
+        sp_attack: specialAttack,
+        sp_defense: specialDefense,
         speed: speed,
         type1: type1,
-        type2: (type2.length > 0 && type1 !== type2) ? type2 : '',
-        generation: 10,
+        type2: (type2.length > 0 && type1 !== type2) ? type2 : ' ',
+        generation: +state.generation,
       }
       await axios.put(`${API_URL}`, newPoki).then((success) => true).catch((err) => false).then(() => navigate('/'))
     }
   }
+
+  console.log(state)
 
   return (
     <div style={{
@@ -135,6 +139,7 @@ export const Form = (props) =>  {
               width: '45%',
               height: 50,
             }}
+            defaultValue={type1}
           >
             {
               op.map((o) => (
@@ -153,6 +158,7 @@ export const Form = (props) =>  {
               width: '45%',
               height: 50
             }}
+            defaultValue={type2}
           >
             {
               op.map((o) => (
