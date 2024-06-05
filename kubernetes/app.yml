@@ -1,60 +1,58 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-pod
+  name: app-pod
+  labels:
+    app: cloud
 spec:
   volumes:
     - name: db-persistent-volume
       persistentVolumeClaim:
         claimName: db-persistent-volume-claim
-    - name: frontend-volume
-      emptyDir: {}
   containers:
-    - image: frontend
+    - image: frontend:1.0
       name: frontend-container
       ports:
         - containerPort: 80
           name: http
           protocol: TCP
-      volumeMounts:
-        - mountPath: /usr/share/nginx/html
-          name: nginx-persistent-volume
       livenessProbe:
-        httpGet:
-          path: /
+        tcpSocket:
           port: 80
         initialDelaySeconds: 5
         timeoutSeconds: 1
         periodSeconds: 10
         failureThreshold: 3
-    - image: backend
+    - image: backend:1.0
       name: backend-container
       ports:
           - containerPort: 8080
             name: http
             protocol: TCP
       livenessProbe:
-        httpGet:
-          path: /
-          port: 8080
+        exec:
+          command:
+          - cat
         initialDelaySeconds: 5
         timeoutSeconds: 1
         periodSeconds: 10
         failureThreshold: 3
-    - image: db
+    - image: postgres:alpine3.20
       name: db-container
+      env:
+        - name: POSTGRES_PASSWORD
+          value: "pokemon"
       ports:
           - containerPort: 1521
             name: http
             protocol: TCP
-        volumeMounts:
-          - mountPath: /var/lib/postgresql/data
-            name: db-persistent-volume
-            livenessProbe:
-      httpGet:
-        path: /
-        port: 1521
-      initialDelaySeconds: 5
-      timeoutSeconds: 1
-      periodSeconds: 10
-      failureThreshold: 3
+      volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db-persistent-volume
+      livenessProbe:
+        tcpSocket:
+          port: 5432
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
