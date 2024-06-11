@@ -6,7 +6,6 @@
     - name: Install packages
       apt: update_cache=yes name={{ item }} state=present
       with_items:
-        - python-pip
         - nginx
         - nodejs
     - name: Copy nginx configuration

@@ -5,3 +5,7 @@ nodes:
     extraPortMappings:
     - containerPort: 30000
       hostPort: 3000
+    - containerPort: 31000
+      hostPort: 8080
+    - containerPort: 32000
+      hostPort: 5432
